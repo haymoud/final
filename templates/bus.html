@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Bus
+{% endblock %}
+
+{% block main%}
+<div class="room">
+    Bus
+</div>
+<div class="abonnement">
+    <form action="/payment" method="get">
+        <input type="submit" value="abonnez vous"> 
+    </form>
+</div>
+ 
+<form class="box" action="/bus" method="post">
+
+    <h1 class="log">
+        choisi une station
+    </h1>
+    <select name="station">
+        <option disabled selected>Station</option>
+        {% for row in rows%}
+            <option>{{row.name}}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="choisi"> 
+</form>
+<table>
+    <thead>
+        <tr>
+            <th>date voyage</th>
+        </tr>
+    </thead>
+    <tbody>
+        {%if trips%}
+            {% for trip in trips%}
+            <tr>
+                <td>{{trip}}</td>
+            </tr>
+            {% endfor %}
+        {%else%}
+        <tr>
+            <td>choisi une station</td>
+        </tr>
+        {% endif %}
+    </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block title %}
+    reservation
+{% endblock %}
+{% block main %}
+    <form class="box" action="/reservation" method="post">
+
+        <h1 class="log">
+            reservez une salle
+        </h1>
+        <input type="text" autocomplete="off" autofocus name="salle" placeholder="Enter le nom de salle">
+        <input type="hidden" name="iddepartement" value="{{iddepartement}}">
+        <input type="submit" value="Reservez">
+
+
+    </form>
+{% endblock %}

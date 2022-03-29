@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    salles
+{% endblock %}
+
+{% block main%}
+<div class="room">
+    Salles de departement de {{departement[0].name}}
+</div>
+<table>
+    <thead>
+        <tr>
+            <th>SALLES TP</th>
+            <th>STATUS</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for depart in range(emptyroom) %}
+            <tr>
+                <td>salle {{depart + 1}}</td>
+                <td>libre</td>
+                <td>
+                    <form action="/take_room" method="post">
+                        <input type="hidden" name="iddepartement" value="{{id}}">
+                        <input type="submit" value="reservez une salle">
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

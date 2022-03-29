@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    main
+{% endblock %}
+
+{% block main %}
+    <div class="room">
+        DEPARTEMENTS DE FACULTE DE SCIENCE ET DE TECHNIQUE
+    </div>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <td>departement</td>
+                    <td>salles vide</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for departement in depart%}
+                    <tr>
+                        <td>{{ departement.name }}</td>
+                        <td>{{ departement.empty_classroom }}</td>
+                        <td>
+                            <form action="/enter" method="post">
+                                <input name="id" value="{{ departement.id }}" type="hidden">
+                                <input type="submit" value="entrer un departement">
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+{% endblock %}

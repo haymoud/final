@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block title %}
+    add amphie
+{% endblock %}
+{% block main %}
+    <form class="box" action="/add" method="post">
+
+        <h1 class="log">
+            ajouter un emphie
+        </h1>
+        <input type="text" autocomplete="off" autofocus name="emphie" placeholder="Enter le nom de l'emphie">
+        <input type="number" name="capacite" placeholder="Entrer le capasite">
+        <input type="submit" value="AJOUTER">
+    </form>
+{% endblock %}

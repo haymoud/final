@@ -1,0 +1,101 @@
+body{
+    margin:0;
+    padding:0;
+    font-family: sans-serif;
+    background-size: cover;
+}
+
+.box h1
+{
+    color: black;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-align: center;
+}
+.box input[type="text"],.box input[type="password"],.box input[type="number"],.box select
+{
+border: 0;
+background: none;
+display: block;
+margin: 20px auto;
+text-align: center;
+border:3px solid #0367fd;
+padding:14px 10px;
+width:220px;
+outline: none;
+color: black;
+border-radius: 24px;
+transition:0.25px;
+}
+
+.box input[type="text"]:focus,.box input[type="password"]:focus,.box input[type="number"]:focus{
+
+width:270px;
+border-color: blue;
+
+}
+.box input[type="submit"]{
+
+
+border: 0;
+background: none;
+display: block;
+margin: 20px auto;
+text-align: center;
+border:3px solid blue;
+padding:14px 35px;
+outline: none;
+color: black;
+border-radius: 24px;
+transition:0.25px;
+cursor:pointer;
+    
+}
+.box input[type="submit"]:hover{
+    background: blue;
+}
+
+
+table {
+    background-color: transparent;
+    margin-top: 20px;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+table th,
+table td {
+    padding: 0.75rem;
+    vertical-align: middle;
+}
+
+tbody tr:nth-of-type(odd) {
+    background-color: rgb(179, 208, 255, 0.3)
+}
+
+
+button, input[type="submit"] {
+    background-color: #d9edff;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    font-size: 0.95rem;
+    font-weight: 400;
+    line-height: 1.5;
+    padding: 0.375rem 0.75rem;
+    text-align: center;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    vertical-align: middle;
+}
+
+.room
+{
+    background-color: #0367fd;
+    text-align: center;
+    padding: 10px;
+    margin: 10px;
+}
+
+.abonnement
+{
+    text-align: right;
+}

@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    AMPHIES
+{% endblock %}
+
+{% block main%}
+<div class="room">
+    Amphies
+</div>
+<table>
+    <thead>
+        <tr>
+            <th>emphie</th>
+            <th>capasite</th>
+            <th>
+                <form action="/add" method="get">
+                    <input type="submit" value="ajouter un emphie">
+                </form>
+            </th>
+            <th>status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in rows %}
+
+            <tr>
+                <td>{{row.name}}</td>
+                <td>{{row.capacity}}</td>
+                <td></td>
+                <td>{{row.state}}</td>
+                <td>
+                    <form action="/libre_reseve" method="post">
+                        <input type="hidden" name="id" value="{{row.id}}">
+                        <input type="submit" value="reservez/liberez">
+                    </form>
+                </td>
+                <td>
+                    <form action="/delete_emphie" method="post">
+                        <input type="hidden" name="id" value="{{row.id}}">
+                        <input type="submit" value="suprimer un emphie">
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

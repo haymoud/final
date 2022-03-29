@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    salles reserver
+{% endblock %}
+
+{% block main%}
+<div class="room">
+    Salles reserver
+</div>
+<table>
+    <thead>
+        <tr>
+            <th>departeement</th>
+            <th>name</th>
+            <th>date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in rows %}
+            <tr>
+                <td>{{row.name}}</td>
+                <td>{{row.name_room}}</td>
+                <td>{{row.date}}</td>
+                <td>
+                    <form action="/delete" method="post">
+                        <input type="hidden" name="nameroom" value="{{row.name_room}}">
+                        <input type="hidden" name="namedepartement" value="{{row.name}}">
+                        <input type="submit" value="Liberez une salle">
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
