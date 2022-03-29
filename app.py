@@ -29,7 +29,10 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 Library to use SQLite database
-db = SQL("sqlite:///departements.db")
+uri = os.getenv("DATABASE_URL")
+if uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://")
+db = SQL(uri)
 
 
 
@@ -84,7 +87,7 @@ def logout():
 
 
 
-# register route 
+# register route
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
@@ -108,15 +111,15 @@ def register():
 
         if pass_word != confirmation_pass:
             return apology("password not confirmed")
-        
+
         # encrypt password
         hash_password = generate_password_hash(pass_word)
-        
+
         # insert user to database
         db.execute("INSERT INTO  users (username, hash) VALUES(?, ?)", user_name, hash_password)
 
         # log the user in
-        row = db.execute("SELECT * FROM users WHERE username = ?", user_name) 
+        row = db.execute("SELECT * FROM users WHERE username = ?", user_name)
         session["user_id"] = row[0]["id"]
         return redirect("/")
 
@@ -159,18 +162,18 @@ def reservation():
     # make sure the user type a room name
     if not request.form.get("salle"):
         return apology("you must enter a name")
-    
+
     # user form
     nameroom = request.form.get("salle")
     iddepartement = request.form.get("iddepartement")
-    
+
     # date of reservation
     date_now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     # update number of empty class room and insert room information to data base
     number_empty_room = int(db.execute("SELECT empty_classroom FROM departement WHERE id = ?", iddepartement)[0]["empty_classroom"])
     if number_empty_room <= 0:
         return apology("there is no room left")
-    
+
     try:
         db.execute("INSERT INTO classroom (id_depart, name_room, date) VALUES(?, ?, ?)", iddepartement, nameroom, date_now)
     except:
@@ -185,23 +188,23 @@ def reservation():
 @app.route("/delete", methods=["POST"])
 @login_required
 def delete():
-    
+
     # delete the room from token room
     nameroom = request.form.get("nameroom")
     namedepartement = request.form.get("namedepartement")
     if nameroom and namedepartement:
         # delete the room
         db.execute("DELETE FROM classroom WHERE name_room = ?", nameroom)
-        
+
         #the empty room number
         number_empty_room = int(db.execute("SELECT empty_classroom FROM departement WHERE name = ?", namedepartement)[0]["empty_classroom"])
-        
+
         #update the empty room number
         db.execute("UPDATE departement SET empty_classroom = ? WHERE name = ? ",number_empty_room + 1, namedepartement)
-        return redirect("/") 
+        return redirect("/")
     else:
         return apology("sorry")
-    
+
 
 # all room reserved
 @app.route("/salles")
@@ -211,7 +214,7 @@ def salle():
     return render_template("token_rooms.html", rows=rows)
 
 
-# emphies 
+# emphies
 @app.route("/emphies")
 @login_required
 def emphies():
@@ -234,11 +237,11 @@ def add():
             capacity = int(capacity)
         except:
             return apology("use an inetger")
-            
+
         db.execute("INSERT INTO emphies (name, capacity) VALUES(?,?)", name, capacity)
 
         return redirect("/emphies")
-    
+
     else:
         return render_template("addemphie.html")
 
@@ -286,7 +289,7 @@ def bus():
     if request.method == "GET":
         rows = db.execute("SELECT name FROM station")
         return render_template("bus.html", rows=rows)
-    
+
     else:
         s = request.form.get("station")
         if not s:
@@ -304,7 +307,7 @@ def bus():
             return render_template("bus.html",trips=trips)
 
 
-# payment route 
+# payment route
 
 @app.route("/payment", methods=["POST","GET"])
 @login_required
@@ -313,7 +316,7 @@ def payment():
         return render_template("payment.html")
 
     else:
-        
+
         session = stripe.checkout.Session.create(
             payment_method_types=['card'],
             line_items=[{
@@ -324,10 +327,10 @@ def payment():
             success_url=url_for('thanks', _external=True) + '?session_id={CHECKOUT_SESSION_ID}',
             cancel_url=url_for('bus', _external=True),
         )
-    
+
         return render_template(
-            'payment.html', 
-            checkout_session_id=session['id'], 
+            'payment.html',
+            checkout_session_id=session['id'],
             checkout_public_key=app.config['STRIPE_PUBLIC_KEY']
         )
 
