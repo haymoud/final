@@ -23,6 +23,10 @@ stripe.api_key = app.config['STRIPE_SECRET_KEY']
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
+//style heroku
+config.serve_static_assets = true
+gem 'rails_12factor', group: :production
+
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
